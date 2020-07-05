@@ -39,8 +39,8 @@ if mode == 1:
         ''')
         sys.stdout = original_stdout #redirects output to python
         print("completed css\n")
-
-    mode = 2
+    
+       
 
 elif mode == 2:        
 #question 1
@@ -51,18 +51,23 @@ elif mode == 2:
         answer = int(input("1) YES\n2) NO\n"))
     
         if answer == 1:
+            title = input("What would you like to write in the header: ")
 #creation of html file
             file = open(html + '.html', 'a')
             with file as fw:
                 sys.stdout = fw # direct the standard output to the file
                 print('''
         <div class="header">
-        <h1 style="color:white">Title goes here</h1>
+        <h1 style="color:white">''',title,'''</h1>
         </div>
 
         ''')
             sys.stdout = original_stdout #redirects output to python
             print("completed html")
+
+            image = input("Enter name of jpg logo: ")
+            bg = input("What color background do you want the header: ")
+            
         
 #creation of css file
             file = open(css + '.css', 'a')
@@ -73,11 +78,11 @@ elif mode == 2:
             }
             .header{S
                 border-radius: 0px 0px 30px 30px;
-                background-color: black;
+                background-color: ''',bg,''';
                 text-align: center;
                 padding: 20px;
                 /*Testing 2 backgrounds positioning*/
-                background-image: url(logo.jpg), url(headerbg.jpg);
+                background-image: url(''',image +'''.jpg), url(headerbg.jpg);
             background-position: right bottom, left top;
             background-repeat: no-repeat, repeat;
         }
@@ -108,26 +113,39 @@ elif mode == 2:
         answer = int(input("1) TOP\n2) LEFT\n3) NONE\n"))
 
         if answer == 1:
-#creation of html file
-           file = open(html + '.html', 'a')
-           with file as fw:
+            linkAmount = int(input("How many links would you like to include: "))
+            #creation of html file
+            file = open(html + '.html', 'a')
+            with file as fw:
                 sys.stdout = fw # direct the standard output to the file
-                print('''<div class="topnav">
-    <a href="website.html">Home</a>
-    <a href="blog.html">Typical Blog</a>
-    <a class="active" href="login.html">Login</a>
-    </div>
-        ''')
+                print('''<div class="topnav">''')
+                sys.stdout = original_stdout #redirects output to python
+                i=0         
+                while i<linkAmount:
+                    link = input("Enter name of other html page you wish to link: ")
+                    linkName = input("What will the nav bar say for this link: ")
+                    sys.stdout = fw # direct the standard output to the file
+                    print("<a href='",link+".html'>",linkName,"</a>")
+                    sys.stdout = original_stdout
+                    i+=1
+                
+                sys.stdout = fw
+                print("</div>")
+                    
                 sys.stdout = original_stdout #redirects output to python
                 print("completed html")
-                
+
+                color = input("What color would you lke the navigation bar to be: ")
+                text = input("What color should the text be: ")
+                hover = input("What color should the link appear when the user is hovering over it: ")
+                textHover = input("What color should the text turn when user is hovering over it: ")
     #creation of css file
                 file = open(css + '.css', 'a')
                 with file as fw:
                     sys.stdout = fw # direct the standard output to the file
                     print('''.topnav{
                 overflow: hidden;
-                background-color: white;
+                background-color:''',color,''';
                 border-style: solid;
                 border-width: 1px;
                 border-radius: 3px 3px 3px 3px;
@@ -137,18 +155,18 @@ elif mode == 2:
         .topnav a{
                 float: right;
                 display: block;
-                color: black;
+                color: ''',text,''';
                 text-align: center;
                 padding: 14px 16px;
                 text-decoration: none;
                 border-style: solid;
-                border-width: 0px 2px;
+                border-width: 1px;
         }
 
         /*nav hover color*/
         .topnav a:hover{
-                background-color: blue;
-                color: white;
+                background-color:''',hover,''';
+                color:''',textHover,''';
         }
 
             
@@ -156,6 +174,9 @@ elif mode == 2:
                 sys.stdout = original_stdout #redirects output to python
                 print("completed css")
                 loop = 0
+
+        elif answer == 2:
+            loop = 0
 
         elif answer == 3:
             print("You have selected NO\n")
@@ -176,14 +197,18 @@ elif mode == 2:
             answer = int(input("1) 1 Image\n2) 2 Images\n3) 3 Images\n4) NONE\n"))
 
             if answer == 1:
+                image = input("Enter name of jpg image: ")
+                head = input("Enter image header text: ")
+                subHead = input("Enter image sub header text: ")
+                color = input("What color would you like the text in image: ")
         #creation of html file
                 file = open(html + '.html', 'a')
                 with file as fw:
                     sys.stdout = fw # direct the standard output to the file
                     print('''<div class="blog-image">
          <div class="blog-text">
-         <h1 style="font-size:50px; color:white">Wow Healthy Stuff</h1>
-         <h3 style="color:white">This will change YOU'RE life</h3>
+         <h1 style="font-size:50px; color:''',color+'''">''',head+'''</h1>
+         <h3 style="color:''',color+'''">''',subHead+'''</h3>
          </div>
         </div>
             ''')
@@ -196,7 +221,7 @@ elif mode == 2:
                     sys.stdout = fw # direct the standard output to the file
                     print('''.blog-image{
                 float: center;
-        background: url(blogimg.jpg) no-repeat center;
+        background: url(''',image+'''.jpg) no-repeat center;
         background-size: cover;
         height: 500px;
         width: 90%;
@@ -219,16 +244,18 @@ elif mode == 2:
                 loop = 0
 
             elif answer == 2:
+                image = input("Enter first jpg image name: ")
+                image2= input("Enter second jpg image name: ")
                 #creation of html file
                 file = open(html + '.html', 'a')
                 with file as fw:
                     sys.stdout = fw # direct the standard output to the file
                     print('''<div class="clearfix">
          <div class="img-container">
-          <img src="sideimg1.jpg" alt="sideimg1" >
+          <img src="''',image+'''.jpg" alt="sideimg1" >
           </div>
            <div class="img-container">
-          <img src="sideimg1.jpg" alt="sideimg1" >
+          <img src="''',image2+'''.jpg" alt="sideimg1" >
           </div>
         </div>
           
@@ -259,21 +286,25 @@ elif mode == 2:
                 loop = 0
 
             elif answer == 3:
+                image = input("Enter first jpg image name: ")
+                image2= input("Enter second jpg image name: ")
+                image3= input("Enter third jpg image name: ")
+                
                 #creation of html file
                 file = open(html + '.html', 'a')
                 with file as fw:
                     sys.stdout = fw # direct the standard output to the file
                     print('''<div class="clearfix">
           <div class="img-container">
-          <img src="sideimg1.jpg" alt="sideimg1" style="width:100%">
+          <img src="''',image + '''.jpg" alt="sideimg1" style="width:100%">
           </div>
           
           <div class="img-container">
-          <img src="sideimg2.jpg" alt="sideimg2" style="width:100%">
+          <img src="''',image2 + '''.jpg" alt="sideimg2" style="width:100%">
           </div>
           
           <div class="img-container">
-          <img src="sideimg3.jpg" alt="sideimg3" style="width:100%">
+          <img src="''',image3 + '''.jpg" alt="sideimg3" style="width:100%">
           </div>
         </div>
         </br>
@@ -323,17 +354,20 @@ elif mode == 2:
             answer = int(input("1) \n2) \n3) \n4) NONE\n"))
 
             if answer == 1:
+                header = input("Enter header for column: ")
+                para = input("Enter text for the column: ")
+                color = input("What background color would you like for columns: ")
         #creation of html file
                 file = open(html + '.html', 'a')
                 with file as fw:
                     sys.stdout = fw # direct the standard output to the file
-                    print(''' <div class="column middle" style="background-color:#bbb;">
-            <h2>Article begins here</h2>
-            <p>Ad, nav bars, images can be added to sides.</p></div>
+                    print(''' <div class="column middle" style="background-color:''',color+''';">
+            <h2>''',header+'''</h2>
+            <p>''',para+'''</p></div>
             ''')
                 sys.stdout = original_stdout #redirects output to python
                 print("completed html")
-                
+                borderImg = input("If you have a border image enter directory and name: ")
         #creation of css file
                 file = open(css + '.css', 'a')
                 with file as fw:
@@ -350,7 +384,8 @@ elif mode == 2:
           text-align: center;
           width: 99%;
           border: 10px solid transparent;
-                border-image: url(border.jpg) 30% round;
+                border-image: url(''',borderImg+'''.jpg) 30% round;
+          
         }
 
 
@@ -367,18 +402,24 @@ elif mode == 2:
                 loop = 0
 
             elif answer == 2:
+                header = input("Enter header for the right column: ")
+                para = input("Enter text for the right column: ")
+                header2 = input("Enter header for the left column: ")
+                para2 = input("Enter text for the left column: ")
+                color = input("What background color would you like for the right column: ")
+                color2 = input("What background color would you like for the left column: ")
                 #creation of html file
                 file = open(html + '.html', 'a')
                 with file as fw:
                     sys.stdout = fw # direct the standard output to the file
                     print('''<div id="wrapper">
-        <div id="right">
-            <h2>Column right</h2>
-            <p>Some text..</p>
+        <div id="right" style="background-color:''',color+''';">
+            <h2>''',header+'''</h2>
+            <p>''',para+'''</p>
           </div>
-          <div id="left">
-            <h2>Column left</h2>
-            <p>Some text..</p>
+          <div id="left" style="background-color:''',color2+''';">
+            <h2>''',header2+'''</h2>
+            <p>''',para2+'''</p>
           </div>
             ''')
                 sys.stdout = original_stdout #redirects output to python
@@ -404,6 +445,7 @@ elif mode == 2:
                 loop = 0
 
             elif answer == 3:
+                color = input("What background color would you like for the middle column: ")
                 #creation of html file
                 file = open(html + '.html', 'a')
                 with file as fw:
@@ -417,7 +459,7 @@ elif mode == 2:
             <h2>Column left</h2>
             <p>Some text..</p>
           </div>
-          <div id="middle" style="background-color:#ccc;">
+          <div id="middle" style="background-color:''',color+''';">
             <h2>Column middle</h2>
             <p>Some text..</p>
           </div>
