@@ -507,26 +507,27 @@ elif mode == 2:
             answer = int(input("1) YES \n2) NO \n"))
 
             if answer == 1:
+                foot = input("What would you like to write in the footer: ")
                 #creation of html file
                 file = open(html + '.html', 'a')
                 with file as fw:
                     sys.stdout = fw # direct the standard output to the file
                     print('''<FOOTER>
 <div class="footer">
-<h1>Footer</h1>
+<h1>''',foot+'''</h1>
 </div>
 </FOOTER>
 ''')
                 sys.stdout = original_stdout #redirects output to python
                 print("completed html")
-                
+                bgColor = input("What background color would you like on the footer: ")
                 #creation of css file
                 file = open(css + '.css', 'a')
                 with file as fw:
                     sys.stdout = fw # direct the standard output to the file
                     print('''.footer{
 	
-	background-color: lightblue;
+	background-color: ''',bgColor+''';
 	text-align: center;
 	padding: 10px;
 	
