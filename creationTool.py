@@ -6,12 +6,15 @@
 #file has to be created before it can be edited!
 
 import sys
+import subprocess, os, platform
+
 html = input("Name html file: ")
 html = html.replace('.html', '')
 css = input("\nName css file: ")
 css = css.replace('.css', '')
 original_stdout = sys.stdout
 i = 0
+
 
 mainloop = 1
 while mainloop == 1:
@@ -42,12 +45,21 @@ while mainloop == 1:
             ''')
             sys.stdout = original_stdout #redirects output to python
             print("completed css\n")
+
+          #create javascript ready to be edited
+        file = open(css + '.js', 'w')
+        with file as fw:
+            sys.stdout = fw # direct the standard output to the file
+            print('''
+            ''')
+            sys.stdout = original_stdout #redirects output to python
+            print("completed js\n")
         mainloop = 1
 
 
     elif mode == 2:
 
-        choice = int(input("Would you like to:\n1. Add Header, logo and title\n2. Add navigation bar\n3. Add Images\n4. Add Text columns\n5. Add Footer\n"))
+        choice = int(input("Would you like to:\n1. Add Header, logo and title\n2. Add navigation bar\n3. Add Images\n4. Add Text columns\n5. Add Footer\n6. Add video\n7. Add Login form\n9. Delete section\n0. Open html in browser\n"))
         if choice == 1:
         #question 1
         #start of my if loops
@@ -127,7 +139,7 @@ while mainloop == 1:
                         sys.stdout = fw # direct the standard output to the file
                         print('''<div class="''',navName+'''">''')
                         sys.stdout = original_stdout #redirects output to python
-                        
+                        i = 0
                         while i<linkAmount:
                             link = input("Enter name of other html page you wish to link: ")
                             linkName = input("What will the nav bar say for this link: ")
@@ -154,7 +166,7 @@ while mainloop == 1:
                                 linkPos = "float: left;\npadding: 14px 16px;\ntext-decoration: none;\nfont-size: 17px;\ntext-align: center;"
                                 linkPosCheck = 0
                             elif linkPos == "2":
-                                linkPos = "float: none;\nposition: absolute;\ntop: 5%;\nleft: 50%;\ntransform: translate(-50%, -50%);\nfont-size: 17px;\ntext-align: center;"
+                                linkPos = "text-align: center; float: center; display: inline-block; margin: 0 5px;font-size: 17px;padding: 14px 16px;text-decoration: none;"
                                 linkPosCheck = 0
                             elif linkPos == "3":
                                 linkPos = "float: right;\ndisplay: block\nfont-size: 17px;\ntext-align: center;\npadding: 14px 16px;\ntext-decoration: none;"
@@ -169,15 +181,17 @@ while mainloop == 1:
                         with file as fw:
                             sys.stdout = fw # direct the standard output to the file
                             print('''.'''+navName+''' {
-                                        overflow: hidden;
-                                        background-color: '''+bgcolor+''';
+                                    text-align: center;
+                                    display: block;
+                                    overflow: hidden;
+                                    background-color: '''+bgcolor+''';
                         
-                                        }
-                                        /*nav bar links*/
-                                        .'''+navName+''' a{
-                                                ''', linkPos+'''
-                                                color: ''',text+''';
-                                                text-align: center;"
+                                    }
+                                    /*nav bar links*/
+                                    .'''+navName+''' a{
+                                            ''', linkPos+'''
+                                            color: ''',text+''';
+                                            "
                                                 
                                         }
                                         /*nav hover color*/
@@ -216,7 +230,20 @@ while mainloop == 1:
                     name = input("First, name the image container: ")
                     image = input("Enter name of jpg image: ")
                     height = input("What height do you want the image to be. e.g.500px,  550px for full page: ")
-                    width = input("What width do you want the image to be. e.g.1000px, 1355px for full page: ")
+                    height = height.replace('px', '')
+                    width = input("What width do you want the image to be.\n 1.Full page\n2. Half page\n ")
+                    miniloop = 1
+                    while miniloop == 1:
+                        if width ==1:
+                            width = "100%"
+                            miniloop = 0
+                        elif width == 2:
+                            width = "50%"
+                            miniloop = 0
+                        else:
+                            print("Please choose from 1 or 2...\n")
+                            miniloop = 1
+
                     head = input("Enter image header text: ")
                     subHead = input("Enter image sub header text: ")
                     color = input("What color would you like the text in image: ")
@@ -266,7 +293,7 @@ while mainloop == 1:
                     float: center;
             background: url('''+image+'''.jpg) no-repeat center;
             background-size: cover;
-            height:''',height+''';
+            height:''',height+'''px;
             width: ''',width+''';
             margin: auto;
             position: relative;
@@ -573,6 +600,12 @@ while mainloop == 1:
                 else:
                     print("Invalid answer. Enter 1 for yes or 2 for no.\n")
                     loop = 1
-
+        elif choice == 0:
+            if platform.system() == 'Darwin':       # macOS
+                subprocess.call(('open', html+'.html'))
+            elif platform.system() == 'Windows':    # Windows
+                os.startfile(html+'.html')
+            else:                                   # linux variants
+                subprocess.call(('xdg-open', html+'.html'))
     else:
             loop = 1
