@@ -231,7 +231,7 @@ while mainloop == 1:
                     image = input("Enter name of jpg image: ")
                     height = input("What height do you want the image to be. e.g.500px,  550px for full page: ")
                     height = height.replace('px', '')
-                    width = input("What width do you want the image to be.\n 1.Full page\n2. Half page\n ")
+                    width = int(input("What width do you want the image to be.\n1. Full page\n2. Half page\n "))
                     miniloop = 1
                     while miniloop == 1:
                         if width ==1:
@@ -421,6 +421,7 @@ while mainloop == 1:
                     header = input("Enter header for column: ")
                     para = input("Enter text for the column: ")
                     color = input("What background color would you like for columns: ")
+                    text = input("What color do you want the text to be: ")
             #creation of html file
                     file = open(html + '.html', 'a')
                     with file as fw:
@@ -432,15 +433,16 @@ while mainloop == 1:
                     sys.stdout = original_stdout #redirects output to python
                     print("completed html")
                     borderImg = input("If you have a border image enter directory and name: ")
+                    
             #creation of css file
                     file = open(css + '.css', 'a')
                     with file as fw:
                         sys.stdout = fw # direct the standard output to the file
                         print('''/* Create one main article */
             .column {
+                color: ''',text+''';
               float: center;
               padding: 4px;
-              height: 500px;
               }
             .middle {
             float: center;
