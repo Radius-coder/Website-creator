@@ -219,7 +219,7 @@ document.getElementById(\""""+navName+"""\").style.top = "-50px";
                                     sys.stdout = original_stdout #redirects output to python
                                     print("completed js\n")
 
-                            elif respondChoice == 2:
+                            else:
                                 print('''.'''+navName+''' {
                                         text-align: center;
                                         display: block;
