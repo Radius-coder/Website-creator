@@ -204,7 +204,7 @@ background-color: '''+hover+''';
 color: '''+textHover+''';
 }''')
 
-                                file = open(css + '.js', 'w')
+                                file = open(css + '.js', 'a')
                                 with file as fw:
                                     sys.stdout = fw # direct the standard output to the file
                                     print("""
@@ -766,7 +766,7 @@ body, html {
                     print("completed css\n")
 
 
-                    file = open(css + '.js', 'w')
+                    file = open(css + '.js', 'a')
                     with file as fw:
                         sys.stdout = fw # direct the standard output to the file
                         print('''function openPage(pageName, elmnt, color) {
@@ -867,7 +867,7 @@ body, html {
                     print("completed css\n")
 
 
-                    file = open(css + '.js', 'w')
+                    file = open(css + '.js', 'a')
                     with file as fw:
                         sys.stdout = fw # direct the standard output to the file
                         print('''function openPage(pageName, elmnt, color) {
@@ -976,7 +976,7 @@ body, html {
                     print("completed css\n")
 
 
-                    file = open(css + '.js', 'w')
+                    file = open(css + '.js', 'a')
                     with file as fw:
                         sys.stdout = fw # direct the standard output to the file
                         print('''function openPage(pageName, elmnt, color) {
@@ -1095,7 +1095,7 @@ body, html {
                     print("completed css\n")
 
 
-                    file = open(css + '.js', 'w')
+                    file = open(css + '.js', 'a')
                     with file as fw:
                         sys.stdout = fw # direct the standard output to the file
                         print('''function openPage(pageName, elmnt, color) {
@@ -1214,7 +1214,7 @@ document.getElementById("defaultOpen").click();
                             print("completed css\n")
 
 
-                            file = open(css + '.js', 'w')
+                            file = open(css + '.js', 'a')
                             with file as fw:
                                 sys.stdout = fw # direct the standard output to the file
                                 print('''let slideIndex = 1;
@@ -1383,7 +1383,7 @@ function showSlides(n) {
                             print("completed css\n")
 
 
-                            file = open(css + '.js', 'w')
+                            file = open(css + '.js', 'a')
                             with file as fw:
                                 sys.stdout = fw # direct the standard output to the file
                                 print('''let slideIndex = 1;
@@ -1561,7 +1561,7 @@ function showSlides(n) {
                             print("completed css\n")
 
 
-                            file = open(css + '.js', 'w')
+                            file = open(css + '.js', 'a')
                             with file as fw:
                                 sys.stdout = fw # direct the standard output to the file
                                 print('''let slideIndex = 1;
@@ -1750,7 +1750,7 @@ img {vertical-align: middle;}
                             print("completed css\n")
 
 
-                            file = open(css + '.js', 'w')
+                            file = open(css + '.js', 'a')
                             with file as fw:
                                 sys.stdout = fw # direct the standard output to the file
                                 print('''let slideIndex = 1;
