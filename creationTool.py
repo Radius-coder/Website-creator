@@ -32,6 +32,7 @@ while mainloop == 1:
             </HEAD>
 
             <BODY>
+            <script src="'''+css+'''.js" defer></script>
 
             ''')
             sys.stdout = original_stdout #redirects output to python
@@ -59,7 +60,7 @@ while mainloop == 1:
 
     elif mode == 2:
 
-        choice = int(input("Would you like to:\n1. Add Header, logo and title\n2. Add navigation bar\n3. Add Images\n4. Add Text columns\n5. Add Footer\n6. Add video\n7. Add Login form\n9. Delete section\n0. Open html in browser\n"))
+        choice = int(input("Would you like to:\n1. Add Header, logo and title\n2. Add navigation bar\n3. Add Images\n4. Add Text columns\n5. Add Footer\n6. Add video\n7. Add Login form\n9. Delete section\n10. Add page tabs\n11. Add Image Slideshow\n0. Open html in browser\n"))
         if choice == 1:
         #question 1
         #start of my if loops
@@ -126,7 +127,7 @@ while mainloop == 1:
             while loop ==1:
                 original_stdout = sys.stdout
                 print("Would you like to create a navigation bar at the top, left, right or bottom?\nAnswer with 1 or 2 or 3?\n")
-                answer = int(input("1) TOP\n2) LEFT\n3) NONE\n"))
+                answer = int(input("1) TOP\n\n3) NONE\n"))
 
                 if answer == 1:
                     
@@ -175,32 +176,71 @@ while mainloop == 1:
                                 print("Invalid Choice!\n")
                                 linkPosCheck = 1
                         
-                                
+                                    
             #creation of css file
+                        print("Do you want the nav bar to stay at top when user scrolls down? ")
+                        respondChoice = input("1) Yes\n2) No\n")
                         file = open(css + '.css', 'a')
                         with file as fw:
                             sys.stdout = fw # direct the standard output to the file
-                            print('''.'''+navName+''' {
-                                    text-align: center;
-                                    display: block;
-                                    overflow: hidden;
-                                    background-color: '''+bgcolor+''';
-                        
-                                    }
-                                    /*nav bar links*/
-                                    .'''+navName+''' a{
-                                            ''', linkPos+'''
-                                            color: ''',text+''';
-                                            "
-                                                
-                                        }
-                                        /*nav hover color*/
-                                        .'''+navName+''' a:hover{
-                                                background-color: '''+hover+''';
-                                                color: '''+textHover+''';
-                                        }
+                            if respondChoice == '1':
+                                print('''.'''+navName+'''{
+background-color: '''+bgcolor+'''; /* Black background color */
+position: fixed; /* Make it stick/fixed */
+top: -50px; /* Hide the navbar 50 px outside of the top view */
+width: 100%; /* Full width */
+transition: top 0.3s; /* Transition effect when sliding down (and up) */
+}
 
-                                    ''')
+/* Style the navbar links */
+.'''+navName+''' a {
+'''+linkPos+'''
+color: '''+text+''';
+text-decoration: none;
+}
+
+.'''+navName+''' a:hover {
+background-color: '''+hover+''';
+color: '''+textHover+''';
+}''')
+
+                                file = open(css + '.js', 'w')
+                                with file as fw:
+                                    sys.stdout = fw # direct the standard output to the file
+                                    print("""
+window.onscroll = function() {scrollFunction()};function scrollFunction() {
+if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+document.getElementById(\""""+navName+"""\").style.top = "0";
+} else {
+document.getElementById(\""""+navName+"""\").style.top = "-50px";
+}
+}""")
+
+                                    sys.stdout = original_stdout #redirects output to python
+                                    print("completed js\n")
+
+                            elif respondChoice == 2:
+                                print('''.'''+navName+''' {
+                                        text-align: center;
+                                        display: block;
+                                        overflow: hidden;
+                                        background-color: '''+bgcolor+''';
+                            
+                                        }
+                                        /*nav bar links*/
+                                        .'''+navName+''' a{
+                                                ''', linkPos+'''
+                                                color: ''',text+''';
+                                                "
+                                                    
+                                            }
+                                            /*nav hover color*/
+                                            .'''+navName+''' a:hover{
+                                                    background-color: '''+hover+''';
+                                                    color: '''+textHover+''';
+                                            }
+
+                                        ''')
                         sys.stdout = original_stdout #redirects output to python
                         print("completed css")
                         loop = 0
@@ -602,6 +642,1162 @@ while mainloop == 1:
                 else:
                     print("Invalid answer. Enter 1 for yes or 2 for no.\n")
                     loop = 1
+
+        elif choice == 6:
+            #question 6######################################################################################################################################
+            #start of my if loops
+            loop = 1
+            while loop ==1:
+                original_stdout = sys.stdout
+                vidName = input("What is the name of your MP4 file?\n")
+                vidAlign = input("Do you want it on the left, centre or right?\n1) Left\n2) Centre\n3) Right\n")
+                    #creation of html file
+
+                file = open(html + '.html', 'a')
+                with file as fw:
+                    sys.stdout = fw # direct the standard output to the file
+                    if vidAlign == 1:
+                        print('''<video width="100%" height ="50%" controls id="myvideo">
+      <source src="'''+vidName+'''.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>''')
+                    elif vidAlign == 2:
+                        print('''<video class ="center" width="50%" height ="50%" controls id="myvideo">
+      <source src="'''+vidName+'''.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>''')
+                    elif vidAlign == 3:
+                        print('''<video class ="right" width="50%" height ="50%" controls id="myvideo">
+      <source src="'''+vidName+'''.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>''')
+                    else:
+                        print('''<video class ="center" width="50%" height ="50%" controls id="myvideo">
+      <source src="'''+vidName+'''.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>''')
+                        
+                    sys.stdout = original_stdout #redirects output to python
+                    print("completed html")
+                    #creation of css file
+                    file = open(css + '.css', 'a')
+                    with file as fw:
+                        sys.stdout = fw # direct the standard output to the file
+                        print('''.center {
+    margin-left: auto;
+    margin-right: auto;
+    display: block
+}
+
+.right {
+    float: right
+}
+    ''')
+                    sys.stdout = original_stdout #redirects output to python
+                    print("completed css\n")
+
+                    loop = 0
+            
+
+        elif choice == 10:
+    #question 10
+            #start of my if loops
+            loop = 1
+            while loop ==1:
+                original_stdout = sys.stdout
+                print("How many tabs do you want?\n")
+                answer = int(input("1) 1 \n2)2 \n3) 3\n 4) 4\n"))
+
+                if answer == 1:
+                    tabColour1 = input("What colour would you like the tab button to be: ")
+                    tabName1 = input("What would you like to title the tab: ")
+                    tabContent1 = input("What would you like to write in the tab: ")
+                    #creation of html file
+                    file = open(html + '.html', 'a')
+                    with file as fw:
+                        sys.stdout = fw # direct the standard output to the file
+                        print('''<button class="tablink" onclick="openPage(\''''+tabName1+'''\', this, \'''',tabColour1+'''\')\">''',tabName1, '''</button>''')
+                        print('''<div id =\"'''+tabName1+'''\" class=\"tabcontent\">
+<h3>''',tabName1+'''</h3>
+<p>''',tabContent1+'''</p>
+</div>''')
+                        
+                    sys.stdout = original_stdout #redirects output to python
+                    print("completed html")
+                    #creation of css file
+                    file = open(css + '.css', 'a')
+                    with file as fw:
+                        sys.stdout = fw # direct the standard output to the file
+                        print('''/* Set height of body and the document to 100% to enable "full page tabs" */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 25%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: white;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+#'''+tabName1+''' {background-color:''', tabColour1+''';}
+    ''')
+                    sys.stdout = original_stdout #redirects output to python
+                    print("completed css\n")
+
+
+                    file = open(css + '.js', 'w')
+                    with file as fw:
+                        sys.stdout = fw # direct the standard output to the file
+                        print('''function openPage(pageName, elmnt, color) {
+  // Hide all elements with class="tabcontent" by default */
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Remove the background color of all tablinks/buttons
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+
+  // Show the specific tab content
+  document.getElementById(pageName).style.display = "block";
+
+  // Add the specific color to the button used to open the tab content
+  elmnt.style.backgroundColor = color;
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+                        ''')
+                        sys.stdout = original_stdout #redirects output to python
+                        print("completed js\n")
+        
+                        loop = 0
+
+                elif answer == 2:
+                    tabColour1 = input("What colour would you like the FIRST tab button to be: ")
+                    tabName1 = input("What would you like to title the FIRST tab: ")
+                    tabContent1 = input("What would you like to write in the FIRST tab: ")
+                    tabColour2 = input("What colour would you like the SECOND tab button to be: ")
+                    tabName2 = input("What would you like to title the SECOND tab: ")
+                    tabContent2 = input("What would you like to write in the SECOND tab: ")
+
+                    #creation of html file
+                    file = open(html + '.html', 'a')
+                    with file as fw:
+                        sys.stdout = fw # direct the standard output to the file
+                        print('''<button class="tablink" onclick="openPage(\''''+tabName1+'''\', this, \'''',tabColour1+'''\')\">''',tabName1, '''</button>''')
+                        print('''<button class="tablink" onclick="openPage(\''''+tabName2+'''\', this, \'''',tabColour2+'''\')\">''',tabName2, '''</button>''')
+                        
+                        print('''<div id =\"'''+tabName1+'''\" class=\"tabcontent\">
+<h3>''',tabName1+'''</h3>
+<p>''',tabContent1+'''</p>
+</div>''')
+                        print('''<div id =\"'''+tabName2+'''\" class=\"tabcontent\">
+<h3>''',tabName2+'''</h3>
+<p>''',tabContent2+'''</p>
+</div>''')
+                        
+                    sys.stdout = original_stdout #redirects output to python
+                    print("completed html")
+                    #creation of css file
+                    file = open(css + '.css', 'a')
+                    with file as fw:
+                        sys.stdout = fw # direct the standard output to the file
+                        print('''/* Set height of body and the document to 100% to enable "full page tabs" */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 25%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: white;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+#'''+tabName1+''' {background-color:''', tabColour1+''';}
+#'''+tabName2+''' {background-color:''', tabColour2+''';}
+    ''')
+                    sys.stdout = original_stdout #redirects output to python
+                    print("completed css\n")
+
+
+                    file = open(css + '.js', 'w')
+                    with file as fw:
+                        sys.stdout = fw # direct the standard output to the file
+                        print('''function openPage(pageName, elmnt, color) {
+  // Hide all elements with class="tabcontent" by default */
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Remove the background color of all tablinks/buttons
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+
+  // Show the specific tab content
+  document.getElementById(pageName).style.display = "block";
+
+  // Add the specific color to the button used to open the tab content
+  elmnt.style.backgroundColor = color;
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+                        ''')
+                        sys.stdout = original_stdout #redirects output to python
+                        print("completed js\n")
+        
+                        loop = 0
+                        
+                elif answer == 3:
+                    tabColour1 = input("What colour would you like the FIRST tab button to be: ")
+                    tabName1 = input("What would you like to title the FIRST tab: ")
+                    tabContent1 = input("What would you like to write in the FIRST tab: ")
+                    tabColour2 = input("What colour would you like the SECOND tab button to be: ")
+                    tabName2 = input("What would you like to title the SECOND tab: ")
+                    tabContent2 = input("What would you like to write in the SECOND tab: ")
+                    tabColour3 = input("What colour would you like the THIRD tab button to be: ")
+                    tabName3 = input("What would you like to title the THIRD tab: ")
+                    tabContent3 = input("What would you like to write in the THIRD tab: ")
+
+                    #creation of html file
+                    file = open(html + '.html', 'a')
+                    with file as fw:
+                        sys.stdout = fw # direct the standard output to the file
+                        print('''<button class="tablink" onclick="openPage(\''''+tabName1+'''\', this, \'''',tabColour1+'''\')\">''',tabName1, '''</button>''')
+                        print('''<button class="tablink" onclick="openPage(\''''+tabName2+'''\', this, \'''',tabColour2+'''\')\">''',tabName2, '''</button>''')
+                        print('''<button class="tablink" onclick="openPage(\''''+tabName3+'''\', this, \'''',tabColour3+'''\')\">''',tabName3, '''</button>''')
+                        
+                        print('''<div id =\"'''+tabName1+'''\" class=\"tabcontent\">
+<h3>''',tabName1+'''</h3>
+<p>''',tabContent1+'''</p>
+</div>''')
+                        print('''<div id =\"'''+tabName2+'''\" class=\"tabcontent\">
+<h3>''',tabName2+'''</h3>
+<p>''',tabContent2+'''</p>
+</div>''')
+                        print('''<div id =\"'''+tabName3+'''\" class=\"tabcontent\">
+<h3>''',tabName3+'''</h3>
+<p>''',tabContent3+'''</p>
+</div>''')
+                    sys.stdout = original_stdout #redirects output to python
+                    print("completed html")
+                    #creation of css file
+                    file = open(css + '.css', 'a')
+                    with file as fw:
+                        sys.stdout = fw # direct the standard output to the file
+                        print('''/* Set height of body and the document to 100% to enable "full page tabs" */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 25%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: white;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+#'''+tabName1+''' {background-color:''', tabColour1+''';}
+#'''+tabName2+''' {background-color:''', tabColour2+''';}
+#'''+tabName3+''' {background-color:''', tabColour3+''';}
+    ''')
+                    sys.stdout = original_stdout #redirects output to python
+                    print("completed css\n")
+
+
+                    file = open(css + '.js', 'w')
+                    with file as fw:
+                        sys.stdout = fw # direct the standard output to the file
+                        print('''function openPage(pageName, elmnt, color) {
+  // Hide all elements with class="tabcontent" by default */
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Remove the background color of all tablinks/buttons
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+
+  // Show the specific tab content
+  document.getElementById(pageName).style.display = "block";
+
+  // Add the specific color to the button used to open the tab content
+  elmnt.style.backgroundColor = color;
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+                        ''')
+                        sys.stdout = original_stdout #redirects output to python
+                        print("completed js\n")
+        
+                        loop = 0
+
+                elif answer == 4:
+                    tabColour1 = input("What colour would you like the FIRST tab button to be: ")
+                    tabName1 = input("What would you like to title the FIRST tab: ")
+                    tabContent1 = input("What would you like to write in the FIRST tab: ")
+                    tabColour2 = input("What colour would you like the SECOND tab button to be: ")
+                    tabName2 = input("What would you like to title the SECOND tab: ")
+                    tabContent2 = input("What would you like to write in the SECOND tab: ")
+                    tabColour3 = input("What colour would you like the THIRD tab button to be: ")
+                    tabName3 = input("What would you like to title the THIRD tab: ")
+                    tabContent3 = input("What would you like to write in the THIRD tab: ")
+                    tabColour4 = input("What colour would you like the THIRD tab button to be: ")
+                    tabName4 = input("What would you like to title the THIRD tab: ")
+                    tabContent4 = input("What would you like to write in the THIRD tab: ")
+
+                    #creation of html file
+                    file = open(html + '.html', 'a')
+                    with file as fw:
+                        sys.stdout = fw # direct the standard output to the file
+                        print('''<button class="tablink" onclick="openPage(\''''+tabName1+'''\', this, \'''',tabColour1+'''\')\">''',tabName1, '''</button>''')
+                        print('''<button class="tablink" onclick="openPage(\''''+tabName2+'''\', this, \'''',tabColour2+'''\')\">''',tabName2, '''</button>''')
+                        print('''<button class="tablink" onclick="openPage(\''''+tabName3+'''\', this, \'''',tabColour3+'''\')\">''',tabName3, '''</button>''')
+                        print('''<button class="tablink" onclick="openPage(\''''+tabName4+'''\', this, \'''',tabColour4+'''\')\">''',tabName4, '''</button>''')
+
+                        print('''<div id =\"'''+tabName1+'''\" class=\"tabcontent\">
+<h3>''',tabName1+'''</h3>
+<p>''',tabContent1+'''</p>
+</div>''')
+                        print('''<div id =\"'''+tabName2+'''\" class=\"tabcontent\">
+<h3>''',tabName2+'''</h3>
+<p>''',tabContent2+'''</p>
+</div>''')
+                        print('''<div id =\"'''+tabName3+'''\" class=\"tabcontent\">
+<h3>''',tabName3+'''</h3>
+<p>''',tabContent3+'''</p>
+</div>''')
+
+                        print('''<div id =\"'''+tabName4+'''\" class=\"tabcontent\">
+<h3>''',tabName4+'''</h3>
+<p>''',tabContent4+'''</p>
+</div>''')
+                    sys.stdout = original_stdout #redirects output to python
+                    print("completed html")
+                    #creation of css file
+                    file = open(css + '.css', 'a')
+                    with file as fw:
+                        sys.stdout = fw # direct the standard output to the file
+                        print('''/* Set height of body and the document to 100% to enable "full page tabs" */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 25%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: white;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+#'''+tabName1+''' {background-color:''', tabColour1+''';}
+#'''+tabName2+''' {background-color:''', tabColour2+''';}
+#'''+tabName3+''' {background-color:''', tabColour3+''';}
+#'''+tabName4+''' {background-color:''', tabColour4+''';}
+    ''')
+                    sys.stdout = original_stdout #redirects output to python
+                    print("completed css\n")
+
+
+                    file = open(css + '.js', 'w')
+                    with file as fw:
+                        sys.stdout = fw # direct the standard output to the file
+                        print('''function openPage(pageName, elmnt, color) {
+  // Hide all elements with class="tabcontent" by default */
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Remove the background color of all tablinks/buttons
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+
+  // Show the specific tab content
+  document.getElementById(pageName).style.display = "block";
+
+  // Add the specific color to the button used to open the tab content
+  elmnt.style.backgroundColor = color;
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+                        ''')
+                        sys.stdout = original_stdout #redirects output to python
+                        print("completed js\n")
+        
+                        loop = 0
+
+
+#question 11
+        elif choice == 11:
+                    #start of my if loops
+                    loop = 1
+                    while loop ==1:
+                        original_stdout = sys.stdout
+                        print("How many images do you want?\n")
+                        answer = int(input("1) 1 \n2) 2 \n3) 3\n 4) 4\n"))
+                        if answer == 1:
+                            imageFile1 = input("What is the name of the JPG file? ")
+                            imageText1 = input("What would you like to write for the caption: ")
+                                    
+                            #creation of html file
+                            file = open(html + '.html', 'a')
+                            with file as fw:
+                                sys.stdout = fw # direct the standard output to the file
+                                print('''<div class="slideshow-container">
+
+  <!-- Full-width images with number and caption text -->
+  <div class="mySlides fade">
+    <img src="'''+imageFile1+'''.jpg" style="width:100%">
+    <div class="text">'''+imageText1+'''</div></div>
+  </div>''')
+                                        
+                            sys.stdout = original_stdout #redirects output to python
+                            print("completed html")
+                            #creation of css file
+                            file = open(css + '.css', 'a')
+                            with file as fw:
+                                sys.stdout = fw # direct the standard output to the file
+                                print('''* {box-sizing:border-box}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+                    ''')
+                            sys.stdout = original_stdout #redirects output to python
+                            print("completed css\n")
+
+
+                            file = open(css + '.js', 'w')
+                            with file as fw:
+                                sys.stdout = fw # direct the standard output to the file
+                                print('''let slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+}
+                                        ''')
+                                sys.stdout = original_stdout #redirects output to python
+                                print("completed js\n")
+                        
+                                loop = 0
+                        if answer == 2:
+                            imageFile1 = input("What is the name of the FIRST JPG file? ")
+                            imageText1 = input("What would you like to write for the caption: ")
+                            imageFile2 = input("What is the name of the SECOND JPG file? ")
+                            imageText2 = input("What would you like to write for the caption: ")
+                                
+                            #creation of html file
+                            file = open(html + '.html', 'a')
+                            with file as fw:
+                                sys.stdout = fw # direct the standard output to the file
+                                print('''<div class="slideshow-container">
+
+  <!-- Full-width images with number and caption text -->
+  <div class="mySlides fade">
+    <div class="numbertext">1 / 2</div>
+    <img src="'''+imageFile1+'''.jpg" style="width:100%">
+    <div class="text">'''+imageText1+'''</div>
+  </div>
+  <div class="mySlides fade">
+    <div class="numbertext">2 / 2</div>
+    <img src="'''+imageFile2+'''.jpg" style="width:100%">
+    <div class="text">'''+imageText2+'''</div>
+  </div>
+<!-- Next and previous buttons -->
+  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
+<br>
+
+<!-- The dots/circles -->
+<div style="text-align:center">
+  <span class="dot" onclick="currentSlide(1)"></span>
+  <span class="dot" onclick="currentSlide(2)"></span>
+</div></div>''')                                
+                                        
+                            sys.stdout = original_stdout #redirects output to python
+                            print("completed html")
+                            #creation of css file
+                            file = open(css + '.css', 'a')
+                            with file as fw:
+                                sys.stdout = fw # direct the standard output to the file
+                                print('''* {box-sizing:border-box}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+                    ''')
+                            sys.stdout = original_stdout #redirects output to python
+                            print("completed css\n")
+
+
+                            file = open(css + '.js', 'w')
+                            with file as fw:
+                                sys.stdout = fw # direct the standard output to the file
+                                print('''let slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+}
+                                        ''')
+                                sys.stdout = original_stdout #redirects output to python
+                                print("completed js\n")
+                        
+                                loop = 0
+
+                        if answer == 3:
+                            imageFile1 = input("What is the name of the FIRST JPG file? ")
+                            imageText1 = input("What would you like to write for the caption: ")
+                            imageFile2 = input("What is the name of the SECOND JPG file? ")
+                            imageText2 = input("What would you like to write for the caption: ")
+                            imageFile3 = input("What is the name of the THIRD JPG file? ")
+                            imageText3 = input("What would you like to write for the caption: ")
+                                
+                            #creation of html file
+                            file = open(html + '.html', 'a')
+                            with file as fw:
+                                sys.stdout = fw # direct the standard output to the file
+                                print('''<div class="slideshow-container">
+
+  <!-- Full-width images with number and caption text -->
+  <div class="mySlides fade">
+    <div class="numbertext">1 / 3</div>
+    <img src="'''+imageFile1+'''.jpg" style="width:100%">
+    <div class="text">'''+imageText1+'''</div>
+  </div>
+  <div class="mySlides fade">
+    <div class="numbertext">2 / 3</div>
+    <img src="'''+imageFile2+'''.jpg" style="width:100%">
+    <div class="text">'''+imageText2+'''</div>
+  </div>
+  <div class="mySlides fade">
+    <div class="numbertext">3 / 3</div>
+    <img src="'''+imageFile3+'''.jpg" style="width:100%">
+    <div class="text">'''+imageText3+'''</div>
+  </div>
+<!-- Next and previous buttons -->
+  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
+<br>
+
+<!-- The dots/circles -->
+<div style="text-align:center">
+  <span class="dot" onclick="currentSlide(1)"></span>
+  <span class="dot" onclick="currentSlide(2)"></span>
+  <span class="dot" onclick="currentSlide(3)"></span>
+</div></div>''')                                
+                                        
+                            sys.stdout = original_stdout #redirects output to python
+                            print("completed html")
+                            #creation of css file
+                            file = open(css + '.css', 'a')
+                            with file as fw:
+                                sys.stdout = fw # direct the standard output to the file
+                                print('''* {box-sizing:border-box}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+                    ''')
+                            sys.stdout = original_stdout #redirects output to python
+                            print("completed css\n")
+
+
+                            file = open(css + '.js', 'w')
+                            with file as fw:
+                                sys.stdout = fw # direct the standard output to the file
+                                print('''let slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+}
+                                        ''')
+                                sys.stdout = original_stdout #redirects output to python
+                                print("completed js\n")
+                        
+                                loop = 0
+
+                        if answer == 4:
+                            imageFile1 = input("What is the name of the FIRST JPG file? ")
+                            imageText1 = input("What would you like to write for the caption: ")
+                            imageFile2 = input("What is the name of the SECOND JPG file? ")
+                            imageText2 = input("What would you like to write for the caption: ")
+                            imageFile3 = input("What is the name of the THIRD JPG file? ")
+                            imageText3 = input("What would you like to write for the caption: ")
+                            imageFile4 = input("What is the name of the FOURTH JPG file? ")
+                            imageText4 = input("What would you like to write for the caption: ")
+                                
+                            #creation of html file
+                            file = open(html + '.html', 'a')
+                            with file as fw:
+                                sys.stdout = fw # direct the standard output to the file
+                                print('''<div class="slideshow-container">
+
+  <!-- Full-width images with number and caption text -->
+  <div class="mySlides fade">
+    <div class="numbertext">1 / 4</div>
+    <img src="'''+imageFile1+'''.jpg" style="width:100%">
+    <div class="text">'''+imageText1+'''</div>
+  </div>
+  <div class="mySlides fade">
+    <div class="numbertext">2 / 4</div>
+    <img src="'''+imageFile2+'''.jpg" style="width:100%">
+    <div class="text">'''+imageText2+'''</div>
+  </div>
+  <div class="mySlides fade">
+    <div class="numbertext">3 / 4</div>
+    <img src="'''+imageFile3+'''.jpg" style="width:100%">
+    <div class="text">'''+imageText3+'''</div>
+  </div>
+  <div class="mySlides fade">
+    <div class="numbertext">4 / 4</div>
+    <img src="'''+imageFile4+'''.jpg" style="width:100%">
+    <div class="text">'''+imageText4+'''</div>
+  </div>
+<!-- Next and previous buttons -->
+  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
+<br>
+
+<!-- The dots/circles -->
+<div style="text-align:center">
+  <span class="dot" onclick="currentSlide(1)"></span>
+  <span class="dot" onclick="currentSlide(2)"></span>
+  <span class="dot" onclick="currentSlide(3)"></span>
+  <span class="dot" onclick="currentSlide(4)"></span>
+</div></div>''')                                
+                                        
+                            sys.stdout = original_stdout #redirects output to python
+                            print("completed html")
+                            #creation of css file
+                            file = open(css + '.css', 'a')
+                            with file as fw:
+                                sys.stdout = fw # direct the standard output to the file
+                                print('''* {box-sizing: border-box}
+body {font-family: Verdana, sans-serif; margin:0}
+.mySlides {display: none}
+img {vertical-align: middle;}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
+}
+                    ''')
+                            sys.stdout = original_stdout #redirects output to python
+                            print("completed css\n")
+
+
+                            file = open(css + '.js', 'w')
+                            with file as fw:
+                                sys.stdout = fw # direct the standard output to the file
+                                print('''let slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+}
+                                        ''')
+                                sys.stdout = original_stdout #redirects output to python
+                                print("completed js\n")
+                        
+                                loop = 0
+
+
+
+
+            #error check
+
+                        else:
+                            print("Invalid answer. Try again.\n")
+                            loop = 1
+
+
+
         elif choice == 0:
             if platform.system() == 'Darwin':       # macOS
                 subprocess.call(('open', html+'.html'))
