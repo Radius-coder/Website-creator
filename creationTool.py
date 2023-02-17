@@ -60,7 +60,7 @@ while mainloop == 1:
 
     elif mode == 2:
 
-        choice = int(input("Would you like to:\n1. Add Header, logo and title\n2. Add navigation bar\n3. Add Images\n4. Add Text columns\n5. Add Footer\n6. Add video\n7. Add Login form\n9. Delete section\n10. Add page tabs\n11. Add Image Slideshow\n0. Open html in browser\n"))
+        choice = int(input("Would you like to:\n1. Add Header, logo and title\n2. Add navigation bar\n3. Add Images\n4. Add Text columns\n5. Add Footer\n6. Add video\n7. Add Countdown\n8. Add Collapsable Text Boxes\n9. Add a Modal\n10. Add page tabs\n11. Add Image Slideshow\n12. Add a Timeline\n0. Open html in browser\n"))
         if choice == 1:
         #question 1
         #start of my if loops
@@ -127,7 +127,7 @@ while mainloop == 1:
             while loop ==1:
                 original_stdout = sys.stdout
                 print("Would you like to create a navigation bar at the top, left, right or bottom?\nAnswer with 1 or 2 or 3?\n")
-                answer = int(input("1) TOP\n\n3) NONE\n"))
+                answer = int(input("1) TOP\n2) LEFT\n3) NONE\n"))
 
                 if answer == 1:
                     
@@ -187,7 +187,7 @@ while mainloop == 1:
                                 print('''.'''+navName+'''{
 background-color: '''+bgcolor+'''; /* Black background color */
 position: fixed; /* Make it stick/fixed */
-top: -50px; /* Hide the navbar 50 px outside of the top view */
+top: 0px; /* Hide the navbar 50 px outside of the top view */
 width: 100%; /* Full width */
 transition: top 0.3s; /* Transition effect when sliding down (and up) */
 }
@@ -204,20 +204,7 @@ background-color: '''+hover+''';
 color: '''+textHover+''';
 }''')
 
-                                file = open(css + '.js', 'a')
-                                with file as fw:
-                                    sys.stdout = fw # direct the standard output to the file
-                                    print("""
-window.onscroll = function() {scrollFunction()};function scrollFunction() {
-if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-document.getElementById(\""""+navName+"""\").style.top = "0";
-} else {
-document.getElementById(\""""+navName+"""\").style.top = "-50px";
-}
-}""")
 
-                                    sys.stdout = original_stdout #redirects output to python
-                                    print("completed js\n")
 
                             else:
                                 print('''.'''+navName+''' {
@@ -246,6 +233,71 @@ document.getElementById(\""""+navName+"""\").style.top = "-50px";
                         loop = 0
 
                 elif answer == 2:
+                    navName = input("First, name the navigation bar container: ")
+                    linkAmount = int(input("How many links would you like to include: "))
+                    #creation of html file
+                    file = open(html + '.html', 'a')
+                    with file as fw:
+                        sys.stdout = fw # direct the standard output to the file
+                        print('''<div class="''',navName+'''">''')
+                        sys.stdout = original_stdout #redirects output to python
+                        i = 0
+                        while i<linkAmount:
+                            link = input("Enter name of other html page you wish to link: ")
+                            linkName = input("What will the nav bar say for this link: ")
+                            sys.stdout = fw # direct the standard output to the file
+                            print("<a href='",link+".html'>",linkName,"</a>")
+                            sys.stdout = original_stdout
+                            i+=1
+
+                        sys.stdout = fw
+                        print("</div>")
+
+                        sys.stdout = original_stdout #redirects output to python
+                        print("completed html")
+
+                        bgcolor = input("What color would you lke the navigation bar to be: ")
+                        text = input("What color should the text be: ")
+                        textHover = input("What color should the text turn when user is hovering over it: ")
+
+                        file = open(css + '.css', 'a')
+                        with file as fw:
+                            sys.stdout = fw # direct the standard output to the file
+                            print('''.'''+navName+''' {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: '''+bgcolor+''';
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.'''+navName+''' a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: '''+text+''';
+  display: block;
+}
+
+.'''+navName+''' a:hover {
+  color: '''+textHover+''';
+}
+
+@media screen and (max-height: 450px) {
+  .'''+navName+''' {padding-top: 15px;}
+  .'''+navName+''' a {font-size: 18px;}
+}
+
+
+''')
+
+                            sys.stdout = original_stdout #redirects output to python
+                        print("completed css")
+
                     loop = 0
 
                 elif answer == 3:
@@ -460,16 +512,90 @@ document.getElementById(\""""+navName+"""\").style.top = "-50px";
                 if answer == 1:
                     header = input("Enter header for column: ")
                     para = input("Enter text for the column: ")
-                    color = input("What background color would you like for columns: ")
+                    grad = int(input("Would you like to create a gradient background colour that changes when the user scrolls?\n1)Yes\n2)No\n"))
+                    if grad == 1:
+                        grad1 = input("There are 3 points in a gradient.\nWhat colour do you want point 1: ")
+                        grad2 = input("What colour would you like point 2: ")
+                        grad3 = input("What colour would you like point 3: ")
+                    else:
+                        color = input("What background color would you like for columns: ")
+
                     text = input("What color do you want the text to be: ")
+                    image = int(input("Would you like to add an image to the column?\n1) Yes\n2)No\n"))
+                    imgName = ""
+                    imgPos = 0
+                    if image == 1:
+                        imgName = input("Enter name of JPG image: ")
+                        imgPos = int(input("Where do you want to position the image?\n1)Left\n2)Right\n3)Top-Centre\n4)Bottom-Centre\n"))
             #creation of html file
                     file = open(html + '.html', 'a')
                     with file as fw:
                         sys.stdout = fw # direct the standard output to the file
-                        print(''' <div class="column middle" style="background-color:''',color+''';">
-                <h2>''',header+'''</h2>
-                <p>''',para+'''</p></div>
-                ''')
+                        if imgPos == 1:
+                            if grad == 1:
+                                 print(''' <div class="column middle" style="background: linear-gradient(141deg, '''+grad1+''' 0%, '''+grad2+''' 51%, '''+grad3+''' 75%);">
+                    <h2>''',header+'''</h2>
+                    <p><img src="'''+imgName+'''.jpg" alt="'''+imgName+'''">''',para+'''</p></div>
+                    ''')
+
+                            else:
+                                print(''' <div class="column middle" style="background-color:''',color+''';">
+                    <h2>''',header+'''</h2>
+                    <p><img src="'''+imgName+'''.jpg" alt="'''+imgName+'''">''',para+'''</p></div>
+                    ''')
+                        elif imgPos == 2:
+                            if grad == 1:
+                                print(''' <div class="column middle" style="background: linear-gradient(141deg, '''+grad1+''' 0%, '''+grad2+''' 51%, '''+grad3+''' 75%);">
+                    <h2>''',header+'''</h2>
+                    <p>''',para+'''<img src="'''+imgName+'''.jpg" alt="'''+imgName+'''" ></p></div>
+                    ''')
+
+                            else:
+                                print(''' <div class="column middle" style="background-color:''',color+''';">
+                    <h2>''',header+'''</h2>
+                    <p>''',para+'''<img src="'''+imgName+'''.jpg" alt="'''+imgName+'''" ></p></div>
+                    ''')
+                        elif imgPos == 3:
+                            if grad == 1:
+                                print(''' <div class="column middle" style="background: linear-gradient(141deg, '''+grad1+''' 0%, '''+grad2+''' 51%, '''+grad3+''' 75%);">
+                    <h2>''',header+'''</h2>
+                    <img src="'''+imgName+'''.jpg" alt="'''+imgName+'''" >
+                    <p>''',para+'''</p></div>
+                    ''')
+
+                            else:
+                                print(''' <div class="column middle" style="background-color:''',color+''';">
+                    <h2>''',header+'''</h2>
+                    <img src="'''+imgName+'''.jpg" alt="'''+imgName+'''" >
+                    <p>''',para+'''</p></div>
+                    ''')
+                        elif imgPos == 4:
+                            if grad == 1:
+                                print(''' <div class="column middle" style="background: linear-gradient(141deg, '''+grad1+''' 0%, '''+grad2+''' 51%, '''+grad3+''' 75%);">
+                    <h2>''',header+'''</h2>
+                    <p>''',para+'''</p>
+                    <img src="'''+imgName+'''.jpg" alt="'''+imgName+'''" >
+                    </div>
+                    ''')
+
+                            else:
+                                print(''' <div class="column middle" style="background-color:''',color+''';">
+                    <h2>''',header+'''</h2>
+                    <p>''',para+'''</p>
+                    <img src="'''+imgName+'''.jpg" alt="'''+imgName+'''" >
+                    </div>
+                    ''')
+                        else:
+                            if grad == 1:
+                                print(''' <div class="column middle" style="background: linear-gradient(141deg, '''+grad1+''' 0%, '''+grad2+''' 51%, '''+grad3+''' 75%);">
+                    <h2>''',header+'''</h2>
+                    <p>''',para+'''</p></div>''')
+
+                            else:
+                                print(''' <div class="column middle" style="background-color:''',color+''';">
+                    <h2>''',header+'''</h2>
+                    <p>''',para+'''</p></div>''')
+                                
                     sys.stdout = original_stdout #redirects output to python
                     print("completed html")
                     borderImg = input("If you have a border image enter directory and name: ")
@@ -507,24 +633,554 @@ document.getElementById(\""""+navName+"""\").style.top = "-50px";
                 elif answer == 2:
                     header = input("Enter header for the right column: ")
                     para = input("Enter text for the right column: ")
+                    rimage = int(input("Would you like to add an image to the right column?\n1) Yes\n2)No\n"))
+                    rimgName = ""
+                    rimgPos = 0
+                    if rimage == 1:
+                        rimgName = input("Enter name of JPG image: ")
+                        rimgPos = int(input("Where do you want to position the image?\n1)Left\n2)Right\n3)Top-Centre\n4)Bottom-Centre\n"))
                     header2 = input("Enter header for the left column: ")
                     para2 = input("Enter text for the left column: ")
+                    limage = int(input("Would you like to add an image to the right column?\n1) Yes\n2)No\n"))
+                    limgName = ""
+                    limgPos = 0
+                    if limage == 1:
+                        limgName = input("Enter name of JPG image: ")
+                        limgPos = int(input("Where do you want to position the image?\n1)Left\n2)Right\n3)Top-Centre\n4)Bottom-Centre\n"))
                     color = input("What background color would you like for the right column: ")
                     color2 = input("What background color would you like for the left column: ")
                     #creation of html file
                     file = open(html + '.html', 'a')
                     with file as fw:
                         sys.stdout = fw # direct the standard output to the file
-                        print('''<div id="wrapper">
-            <div id="right" style="background-color:''',color+''';">
-                <h2>''',header+'''</h2>
-                <p>''',para+'''</p>
-              </div>
-              <div id="left" style="background-color:''',color2+''';">
-                <h2>''',header2+'''</h2>
-                <p>''',para2+'''</p>
-              </div>
-                ''')
+                        if rimgage == 1 :
+                            #left and right
+                            if limage == 1:
+                                if limgPos == 1:
+                                    if rimgPos == 1:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p><img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >''',para+'''</p>
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p><img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >''',para2+'''</p>
+                          </div>
+                            ''')
+                                    elif rimgPos == 2:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p>''',para+'''<img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" ></p>
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p><img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >''',para2+'''</p>
+                          </div>
+                            ''')
+                                    elif rimgPos == 3:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >
+                            <p>''',para+'''</p>
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p><img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >''',para2+'''</p>
+                          </div>
+                            ''')
+                                    else:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p>''',para+'''</p>
+                            <img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p><img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >''',para2+'''</p>
+                          </div>
+                            ''')
+
+                                elif limgPos == 2:
+                                    if rimgPos == 1:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p><img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >''',para+'''</p>
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p>''',para2+'''<img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" ></p>
+                          </div>
+                            ''')
+                                    elif rimgPos == 2:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p>''',para+'''<img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" ></p>
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p>''',para2+'''<img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" ></p>
+                          </div>
+                            ''')
+                                    elif rimgPos == 3:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >
+                            <p>''',para+'''</p>
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p>''',para2+'''<img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" ></p>
+                          </div>
+                            ''')
+                                    else:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p>''',para+'''</p>
+                            <img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p>''',para2+'''<img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" ></p>
+                          </div>
+                            ''')
+
+                                elif limgPos == 3:
+                                    if rimgPos == 1:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p><img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >''',para+'''</p>
+                            
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >
+                            <p>''',para2+'''</p>
+                          </div>
+                            ''')
+                                        
+                                    elif rimgPos == 2:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p>''',para+'''<img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" ></p>
+                            
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >
+                            <p>''',para2+'''</p>
+                          </div>
+                            ''')
+                                    elif rimgPos == 3:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >
+                            <p>''',para+'''</p>
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >
+                            <p>''',para2+'''</p>
+                          </div>
+                            ''')
+                                    else:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p>''',para+'''</p>
+                            <img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >
+                            <p>''',para2+'''</p>
+                          </div>
+                            ''')
+
+                                else:
+                                    if rimgPos ==1:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p><img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >''',para+'''</p>
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p>''',para2+'''</p>
+                            <img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >
+                          </div>
+                            ''')
+                                    elif rimgPos == 2:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p>''',para+'''<img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" ></p>
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p>''',para2+'''</p>
+                            <img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >
+                          </div>
+                            ''')
+                                    elif rimgPos == 3:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >
+                            <p>''',para+'''</p>
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p>''',para2+'''</p>
+                            <img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >
+                          </div>
+                            ''')
+                                    else:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p>''',para+'''</p>
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p>''',para2+'''</p>
+                            <img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >
+                          </div>
+                            ''')
+                            #just right
+                            else:
+                                if rimgPos == 1:
+                                    print('''<div id="wrapper">
+                    <div id="right" style="background-color:''',color+''';">
+                        <h2>''',header+'''</h2>
+                        <p><img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >''',para+'''</p>
+                      </div>
+                      <div id="left" style="background-color:''',color2+''';">
+                        <h2>''',header2+'''</h2>
+                        <p>''',para2+'''</p>
+                      </div>
+                        ''')
+
+                                elif rimgPos == 2:
+                                    print('''<div id="wrapper">
+                    <div id="right" style="background-color:''',color+''';">
+                        <h2>''',header+'''</h2>
+                        <p>''',para+'''<img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" ></p>
+                      </div>
+                      <div id="left" style="background-color:''',color2+''';">
+                        <h2>''',header2+'''</h2>
+                        <p>''',para2+'''</p>
+                      </div>
+                        ''')
+
+                                elif rimgPos == 3:
+                                    print('''<div id="wrapper">
+                    <div id="right" style="background-color:''',color+''';">
+                        <h2>''',header+'''</h2>
+                        <img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >
+                        <p>''',para+'''</p>
+                      </div>
+                      <div id="left" style="background-color:''',color2+''';">
+                        <h2>''',header2+'''</h2>
+                        <p>''',para2+'''</p>
+                      </div>
+                        ''')
+
+                                else:
+                                    print('''<div id="wrapper">
+                    <div id="right" style="background-color:''',color+''';">
+                        <h2>''',header+'''</h2>
+                        <p>''',para+'''</p>
+                        <img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >
+                      </div>
+                      <div id="left" style="background-color:''',color2+''';">
+                        <h2>''',header2+'''</h2>
+                        <p>''',para2+'''</p>
+                      </div>
+                        ''')
+                        #start with left
+                        elif limage == 1:
+                            if rimage == 1:
+                                if limgPos == 1:
+                                    if rimgPos == 1:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p><img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >''',para+'''</p>
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p><img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >''',para2+'''</p>
+                          </div>
+                            ''')
+
+                                    elif rimgPos == 2:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p>''',para+'''<img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" ></p>
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p><img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >''',para2+'''</p>
+                          </div>
+                            ''')
+
+                                    elif rimgPos == 3:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >
+                            <p>''',para+'''</p>
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p><img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >''',para2+'''</p>
+                          </div>
+                            ''')
+
+                                    else:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p>''',para+'''</p>
+                            <img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p><img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >''',para2+'''</p>
+                          </div>
+                            ''')
+
+                                elif limgPos == 2:
+                                    if rimgPos == 1:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p><img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >''',para+'''</p>
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p>''',para2+'''<img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" ></p>
+                          </div>
+                            ''')
+
+                                    elif rimgPos == 2:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p>''',para+'''<img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" ></p>
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p>''',para2+'''<img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" ></p>
+                          </div>
+                            ''')
+
+                                    elif rimgPos == 3:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >
+                            <p>''',para+'''</p>
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p>''',para2+'''<img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" ></p>
+                          </div>
+                            ''')
+
+                                    else:
+                                        print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p>''',para+'''</p>
+                            <img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >
+                          </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p>''',para2+'''<img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" ></p>
+                          </div>
+                            ''')
+
+                                elif limgPos == 3:
+                                    if rimgPos == 1:
+                                         print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p><img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >''',para+'''</p>
+                            </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >
+                            <p>''',para2+'''</p>
+                          </div>
+                            ''')
+
+                                    elif rimgPos ==2:
+                                         print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p>''',para+'''<img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" ></p>
+                            </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >
+                            <p>''',para2+'''</p>
+                          </div>
+                            ''')
+                                    elif rimgPos == 3:
+                                         print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >
+                            <p>''',para+'''</p>
+                            </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >
+                            <p>''',para2+'''</p>
+                          </div>
+                            ''')
+                                    else:
+                                         print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p>''',para+'''</p>
+                            <img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >
+                            </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >
+                            <p>''',para2+'''</p>
+                          </div>
+                            ''')
+                                else:
+                                    if rimgPos == 1:
+                                         print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p><img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >''',para+'''</p>
+                            </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p>''',para2+'''</p>
+                            <img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >
+                          </div>
+                            ''')
+                                    elif rimgPos ==2:
+                                         print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p>''',para+'''<img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" ></p>
+                            </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p>''',para2+'''</p>
+                            <img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >
+                          </div>
+                            ''')
+                                    elif rimgPos == 3:
+                                         print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >
+                            <p>''',para+'''</p>
+                            </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p>''',para2+'''</p>
+                            <img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >
+                          </div>
+                            ''')
+                                    else:
+                                         print('''<div id="wrapper">
+                        <div id="right" style="background-color:''',color+''';">
+                            <h2>''',header+'''</h2>
+                            <p>''',para+'''</p>
+                            <img src="'''+rimgName+'''.jpg" alt="'''+rimgName+'''" >
+                            </div>
+                          <div id="left" style="background-color:''',color2+''';">
+                            <h2>''',header2+'''</h2>
+                            <p>''',para2+'''</p>
+                            <img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >
+                          </div>
+                            ''')
+                                    
+                            #just left
+                            else:
+                                if limgPos == 1:
+                                    print('''<div id="wrapper">
+                    <div id="right" style="background-color:''',color+''';">
+                        <h2>''',header+'''</h2>
+                        <p>''',para+'''</p>
+                      </div>
+                      <div id="left" style="background-color:''',color2+''';">
+                        <h2>''',header2+'''</h2>
+                        <p><img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >''',para2+'''</p>
+                      </div>
+                        ''')
+
+                                elif limgPos == 2:
+                                    print('''<div id="wrapper">
+                    <div id="right" style="background-color:''',color+''';">
+                        <h2>''',header+'''</h2>
+                        <p>''',para+'''</p>
+                      </div>
+                      <div id="left" style="background-color:''',color2+''';">
+                        <h2>''',header2+'''</h2>
+                        <p>''',para2+'''<img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" ></p>
+                      </div>
+                        ''')
+
+                                elif limgPos == 3:
+                                    print('''<div id="wrapper">
+                    <div id="right" style="background-color:''',color+''';">
+                        <h2>''',header+'''</h2>
+                        <img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >
+                        <p>''',para+'''</p>
+                      </div>
+                      <div id="left" style="background-color:''',color2+''';">
+                        <h2>''',header2+'''</h2>
+                        <p>''',para2+'''</p>
+                      </div>
+                        ''')
+
+                                else:
+                                    print('''<div id="wrapper">
+                    <div id="right" style="background-color:''',color+''';">
+                        <h2>''',header+'''</h2>
+                        <p>''',para+'''</p>
+                      </div>
+                      <div id="left" style="background-color:''',color2+''';">
+                        <h2>''',header2+'''</h2>
+                        <p>''',para2+'''</p>
+                        <img src="'''+limgName+'''.jpg" alt="'''+limgName+'''" >
+                      </div>
+                        ''')
+
+                        #No image
+                        else:
+                            print('''<div id="wrapper">
+                <div id="right" style="background-color:''',color+''';">
+                    <h2>''',header+'''</h2>
+                    <p>''',para+'''</p>
+                  </div>
+                  <div id="left" style="background-color:''',color2+''';">
+                    <h2>''',header2+'''</h2>
+                    <p>''',para2+'''</p>
+                  </div>
+                    ''')
                     sys.stdout = original_stdout #redirects output to python
                     print("completed html")
 
@@ -709,6 +1365,7 @@ document.getElementById(\""""+navName+"""\").style.top = "-50px";
                 answer = int(input("1) 1 \n2)2 \n3) 3\n 4) 4\n"))
 
                 if answer == 1:
+                    tabContainer1 = input("FIRST name the container of the tab: ")
                     tabColour1 = input("What colour would you like the tab button to be: ")
                     tabName1 = input("What would you like to title the tab: ")
                     tabContent1 = input("What would you like to write in the tab: ")
@@ -716,7 +1373,7 @@ document.getElementById(\""""+navName+"""\").style.top = "-50px";
                     file = open(html + '.html', 'a')
                     with file as fw:
                         sys.stdout = fw # direct the standard output to the file
-                        print('''<button class="tablink" onclick="openPage(\''''+tabName1+'''\', this, \'''',tabColour1+'''\')\">''',tabName1, '''</button>''')
+                        print('''<button class="'''+tabContainer1+'''" onclick="openPage(\''''+tabName1+'''\', this, \'''',tabColour1+'''\')\">''',tabName1, '''</button>''')
                         print('''<div id =\"'''+tabName1+'''\" class=\"tabcontent\">
 <h3>''',tabName1+'''</h3>
 <p>''',tabContent1+'''</p>
@@ -736,7 +1393,7 @@ body, html {
 }
 
 /* Style tab links */
-.tablink {
+.'''+tabContainer1+'''{
   background-color: #555;
   color: white;
   float: left;
@@ -745,10 +1402,10 @@ body, html {
   cursor: pointer;
   padding: 14px 16px;
   font-size: 17px;
-  width: 25%;
+  width: 100%;
 }
 
-.tablink:hover {
+.'''+tabContainer1+''':hover {
   background-color: #777;
 }
 
@@ -799,6 +1456,7 @@ document.getElementById("defaultOpen").click();
                         loop = 0
 
                 elif answer == 2:
+                    tabContainer1 = input("FIRST name the container of the tabs: ")
                     tabColour1 = input("What colour would you like the FIRST tab button to be: ")
                     tabName1 = input("What would you like to title the FIRST tab: ")
                     tabContent1 = input("What would you like to write in the FIRST tab: ")
@@ -810,8 +1468,8 @@ document.getElementById("defaultOpen").click();
                     file = open(html + '.html', 'a')
                     with file as fw:
                         sys.stdout = fw # direct the standard output to the file
-                        print('''<button class="tablink" onclick="openPage(\''''+tabName1+'''\', this, \'''',tabColour1+'''\')\">''',tabName1, '''</button>''')
-                        print('''<button class="tablink" onclick="openPage(\''''+tabName2+'''\', this, \'''',tabColour2+'''\')\">''',tabName2, '''</button>''')
+                        print('''<button class="'''+tabContainer1+'''" onclick="openPage(\''''+tabName1+'''\', this, \'''',tabColour1+'''\')\">''',tabName1, '''</button>''')
+                        print('''<button class="'''+tabContainer1+'''" onclick="openPage(\''''+tabName2+'''\', this, \'''',tabColour2+'''\')\">''',tabName2, '''</button>''')
                         
                         print('''<div id =\"'''+tabName1+'''\" class=\"tabcontent\">
 <h3>''',tabName1+'''</h3>
@@ -836,7 +1494,7 @@ body, html {
 }
 
 /* Style tab links */
-.tablink {
+.'''+tabContainer1+''' {
   background-color: #555;
   color: white;
   float: left;
@@ -845,10 +1503,10 @@ body, html {
   cursor: pointer;
   padding: 14px 16px;
   font-size: 17px;
-  width: 25%;
+  width: 50%;
 }
 
-.tablink:hover {
+.'''+tabContainer1+''':hover {
   background-color: #777;
 }
 
@@ -900,6 +1558,7 @@ document.getElementById("defaultOpen").click();
                         loop = 0
                         
                 elif answer == 3:
+                    tabContainer1 = input("FIRST name the container of the tabs: ")
                     tabColour1 = input("What colour would you like the FIRST tab button to be: ")
                     tabName1 = input("What would you like to title the FIRST tab: ")
                     tabContent1 = input("What would you like to write in the FIRST tab: ")
@@ -914,9 +1573,9 @@ document.getElementById("defaultOpen").click();
                     file = open(html + '.html', 'a')
                     with file as fw:
                         sys.stdout = fw # direct the standard output to the file
-                        print('''<button class="tablink" onclick="openPage(\''''+tabName1+'''\', this, \'''',tabColour1+'''\')\">''',tabName1, '''</button>''')
-                        print('''<button class="tablink" onclick="openPage(\''''+tabName2+'''\', this, \'''',tabColour2+'''\')\">''',tabName2, '''</button>''')
-                        print('''<button class="tablink" onclick="openPage(\''''+tabName3+'''\', this, \'''',tabColour3+'''\')\">''',tabName3, '''</button>''')
+                        print('''<button class="'''+tabContainer1+'''" onclick="openPage(\''''+tabName1+'''\', this, \'''',tabColour1+'''\')\">''',tabName1, '''</button>''')
+                        print('''<button class="'''+tabContainer1+'''" onclick="openPage(\''''+tabName2+'''\', this, \'''',tabColour2+'''\')\">''',tabName2, '''</button>''')
+                        print('''<button class="'''+tabContainer1+'''" onclick="openPage(\''''+tabName3+'''\', this, \'''',tabColour3+'''\')\">''',tabName3, '''</button>''')
                         
                         print('''<div id =\"'''+tabName1+'''\" class=\"tabcontent\">
 <h3>''',tabName1+'''</h3>
@@ -944,7 +1603,7 @@ body, html {
 }
 
 /* Style tab links */
-.tablink {
+.'''+tabContainer1+''' {
   background-color: #555;
   color: white;
   float: left;
@@ -953,10 +1612,10 @@ body, html {
   cursor: pointer;
   padding: 14px 16px;
   font-size: 17px;
-  width: 25%;
+  width: 33%;
 }
 
-.tablink:hover {
+.'''+tabContainer1+''':hover {
   background-color: #777;
 }
 
@@ -1009,6 +1668,7 @@ document.getElementById("defaultOpen").click();
                         loop = 0
 
                 elif answer == 4:
+                    tabContainer1 = input("FIRST name the container of the tabs: ")
                     tabColour1 = input("What colour would you like the FIRST tab button to be: ")
                     tabName1 = input("What would you like to title the FIRST tab: ")
                     tabContent1 = input("What would you like to write in the FIRST tab: ")
@@ -1026,10 +1686,10 @@ document.getElementById("defaultOpen").click();
                     file = open(html + '.html', 'a')
                     with file as fw:
                         sys.stdout = fw # direct the standard output to the file
-                        print('''<button class="tablink" onclick="openPage(\''''+tabName1+'''\', this, \'''',tabColour1+'''\')\">''',tabName1, '''</button>''')
-                        print('''<button class="tablink" onclick="openPage(\''''+tabName2+'''\', this, \'''',tabColour2+'''\')\">''',tabName2, '''</button>''')
-                        print('''<button class="tablink" onclick="openPage(\''''+tabName3+'''\', this, \'''',tabColour3+'''\')\">''',tabName3, '''</button>''')
-                        print('''<button class="tablink" onclick="openPage(\''''+tabName4+'''\', this, \'''',tabColour4+'''\')\">''',tabName4, '''</button>''')
+                        print('''<button class="'''+tabContainer1+'''" onclick="openPage(\''''+tabName1+'''\', this, \'''',tabColour1+'''\')\">''',tabName1, '''</button>''')
+                        print('''<button class="'''+tabContainer1+'''" onclick="openPage(\''''+tabName2+'''\', this, \'''',tabColour2+'''\')\">''',tabName2, '''</button>''')
+                        print('''<button class="'''+tabContainer1+'''" onclick="openPage(\''''+tabName3+'''\', this, \'''',tabColour3+'''\')\">''',tabName3, '''</button>''')
+                        print('''<button class="'''+tabContainer1+'''" onclick="openPage(\''''+tabName4+'''\', this, \'''',tabColour4+'''\')\">''',tabName4, '''</button>''')
 
                         print('''<div id =\"'''+tabName1+'''\" class=\"tabcontent\">
 <h3>''',tabName1+'''</h3>
@@ -1062,7 +1722,7 @@ body, html {
 }
 
 /* Style tab links */
-.tablink {
+.'''+tabContainer1+''' {
   background-color: #555;
   color: white;
   float: left;
@@ -1074,7 +1734,7 @@ body, html {
   width: 25%;
 }
 
-.tablink:hover {
+.'''+tabContainer1+''':hover {
   background-color: #777;
 }
 
