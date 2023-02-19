@@ -6,7 +6,9 @@ When you run the program you will be shown this menu:
 
 ![image](https://user-images.githubusercontent.com/67561957/219952587-7bc7547d-8200-46c9-b530-4a388ca9a52f.png)
 
-Currently all features but 'Add a Timeline' are working.
+Currently all features but 'Add countdown', 'Add collapsable text boxes', 'Add a modal' are working.
+
+The feautre 'Add a Timeline' has not been added yet.
 
 When you select a feature the program will ask more questiosn to help the user personalise the feature.
 Here is another screenshot of what this is like:
