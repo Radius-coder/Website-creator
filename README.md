@@ -67,19 +67,78 @@ If a user needs new lines in there text they can type '\n' at which part they wa
 User can also choose to add an image within the text box.
 
 ### Add footer
+Input:
+
+![image](https://user-images.githubusercontent.com/67561957/219954228-814a8025-191a-4a69-b9c7-c538d886ee7e.png)
+
+Output:
+
+![image](https://user-images.githubusercontent.com/67561957/219954287-533ed498-2e2b-4894-885f-685577d3b6d3.png)
+
+
 ### Add video
-### Add countdown
-### Add collapsable text boxes
-### Add a modal
+Input:
+
+![image](https://user-images.githubusercontent.com/67561957/219954397-6bb0ca88-958e-4679-9e70-5e5a313d1678.png)
+
+Output:
+
+![image](https://user-images.githubusercontent.com/67561957/219954488-2c0d7cc0-344c-4fb6-8406-ca6552b0bc82.png)
+
+Here we can also start to see the fixed navigation bar in action.
+
+### Add countdown(Tempormental and not currently working.)
+### Add collapsable text boxes (Tempormental and not currently working.)
+### Add a modal (Tempormental and not currently working.)
+
 ### Add page tabs
+Input:
+
+![image](https://user-images.githubusercontent.com/67561957/219954730-29162f06-e183-4177-9e3a-3ae3b5d16c94.png)
+
+
+Output:
+
+![image](https://user-images.githubusercontent.com/67561957/219954864-96815f45-108d-4c4f-82bb-b98ac25ca12c.png)
+
+Clicking on each tab will bring up different text.
+
 ### Add image slideshow
-### Open html in browser
+Input:
+
+![image](https://user-images.githubusercontent.com/67561957/219954637-59c0e993-beb1-4b3a-a557-17bec7c41cef.png)
+
+Output:
+
+![image](https://user-images.githubusercontent.com/67561957/219954655-a469097d-6f90-4e5c-9b2a-99ba88a50223.png)
+
 
 ## What needs addded
 Adding a timeline.
+
 The choice to use different fonts.
+
+More customisation on footer + option for social media links.
+
+Option to change background colour of whole page.
 
 ## What could be imporved
 Many things like personalisation need to be added. A list below will be updated when I find new things to add:
 ### List of things to fix
-Padding needs fixed on navigation bar.
+Padding needs fixed on the fixed navigation bar.
+
+Padding needs fixed on gradient text columns.
+
+Need to be able to centre links on the fixed navigation bar.
+
+Video needs to be able to go on left and right of page.
+
+Countdown feature not working at all. Unknown why as was working before.
+
+Modal boxes need fixed.
+
+Collapsable text boxes need fixed
+
+All 3 of the above malfunctioned after video was added.
+
+Need to fix page tabs not appearing with background colour
