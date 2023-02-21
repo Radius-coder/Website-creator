@@ -1,4 +1,4 @@
-## What is is
+## What is it?
 This program uses python to create websites. The program will create and edit a HTML, CSS and javascript file.
 
 ## How it works
